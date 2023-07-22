@@ -29,8 +29,8 @@ namespace Hangman
                     {
                         arrayToGuess[c] = '-';
                     }
-                    //game loop
                     int triesLeft = TRIES;
+                    //game loop
                     while (triesLeft > 0)
                     {
                         Console.WriteLine("Guess word below");
@@ -39,10 +39,7 @@ namespace Hangman
                         if (wordToGuess.Contains(userLetter))
                             for (int i = 0; i < wordToGuess.Length; i++)
                             {
-                                if (wordToGuess[i] == userLetter)
-                                {
                                     arrayToGuess[i] = userLetter;
-                                }
                             }
                         Console.Clear();
                         if (arrayToGuess.Contains('-') == false)
