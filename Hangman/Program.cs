@@ -10,8 +10,8 @@ namespace Hangman
                                                     "fishhook","myth","quips","jovial","zigzag",
                                                     };
         public static Random RNG = new Random();                                                                                   // random number function
-        public static int RNGMIN = 0;
-        public static int TRIES = 10;
+        public const int RNGMIN = 0;
+        public const int TRIES = 10;
         static void Main(string[] args)
         {
             {
@@ -29,7 +29,8 @@ namespace Hangman
                     //    arrayToGuess[c] = '-';
                     //}
                     //game loop
-                    while (TRIES>0)
+                    int triesLeft = TRIES;
+                    while (triesLeft>0)
                     {
                         Console.WriteLine("Guess word below");
                         Console.WriteLine(arrayToGuess);
@@ -49,13 +50,13 @@ namespace Hangman
                         }
                         else
                         {
-                            Console.WriteLine($"You have {TRIES-1} attempts left");
-                            TRIES--;
+                            Console.WriteLine($"You have {triesLeft-1} attempts left");
+                            triesLeft--;
                         }
                     }
                     Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
                     Console.WriteLine("If you want to play again press Y for yes, or N for No ");
-                    if (Console.ReadLine().ToLower() == "y" && Console.ReadLine() != null)
+                    if (Console.ReadLine() != null && Console.ReadLine().ToLower() == "y")
                     {
                         continue;
                     }
