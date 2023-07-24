@@ -10,8 +10,9 @@ namespace Hangman
                                                     "fishhook","myth","quips","jovial","zigzag",
                                                     };
         public static Random RNG = new Random();                                                                                   // random number function
-        public const int RNGMIN = 0;
-        public const int TRIES = 10;
+        const int RNGMIN = 0;
+        const int TRIES = 10;
+        const char PLACEHOLDER = '-';
         static void Main(string[] args)
         {
             {
@@ -22,12 +23,11 @@ namespace Hangman
                     //assign random letter to word and store in a string
                     string wordToGuess = LISTOFWORDS[wordRandomFromList];
                     //create array with info which will be shown to player
-     ////char[] arrayToGuess = new char[wordToGuess.Length];
-                    char[] arrayToGuess = new char[LISTOFWORDS.Count];
+                    char[] arrayToGuess = new char[wordToGuess.Length];
                     //assign amount of dashes with amount of characters in secret word
                     for (int c = 0; c < arrayToGuess.Length; c++)
                     {
-                        arrayToGuess[c] = '-';
+                        arrayToGuess[c] = PLACEHOLDER;
                     }
                     int triesLeft = TRIES;
                     //game loop
@@ -50,7 +50,7 @@ namespace Hangman
                         }
                         Console.Clear();
                         //Check if array still has placeholders
-                        if (arrayToGuess.Contains('-') == false)
+                        if (arrayToGuess.Contains(PLACEHOLDER) == false)
                         {
                             Console.WriteLine("Win");
                             break;
@@ -63,7 +63,7 @@ namespace Hangman
                         Console.WriteLine($"You have {triesLeft} attempts left");
                     }
                     //if array still contains placeholders and amount of tries run out , write text
-                    if (arrayToGuess.Contains('-') == true || triesLeft == 0)
+                    if (arrayToGuess.Contains(PLACEHOLDER) == true || triesLeft == 0)
                     {
                         Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
                     }
