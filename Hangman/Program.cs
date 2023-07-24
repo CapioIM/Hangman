@@ -1,5 +1,4 @@
 ﻿using System;
-
 namespace Hangman
 {
     internal class Program
@@ -19,12 +18,13 @@ namespace Hangman
                 while (true)
                 {
                     // choose random number
-                    int wordChoiceFromList = RNG.Next(RNGMIN, LISTOFWORDS.Count);
+                    int wordRandomFromList = RNG.Next(RNGMIN, LISTOFWORDS.Count);
                     //assign random letter to word and store in a string
-                    string wordToGuess = LISTOFWORDS[wordChoiceFromList];
+                    string wordToGuess = LISTOFWORDS[wordRandomFromList];
                     //create array with info which will be shown to player
-                    char[] arrayToGuess = new char[wordToGuess.Length];
-                    //assign amount of dashes as amount of letters in secret word
+     ////char[] arrayToGuess = new char[wordToGuess.Length];
+                    char[] arrayToGuess = new char[LISTOFWORDS.Count];
+                    //assign amount of dashes with amount of characters in secret word
                     for (int c = 0; c < arrayToGuess.Length; c++)
                     {
                         arrayToGuess[c] = '-';
@@ -33,31 +33,45 @@ namespace Hangman
                     //game loop
                     while (triesLeft > 0)
                     {
-                        Console.WriteLine("Guess word below");
+                        Console.WriteLine($"Guess word below within {triesLeft} attempts");
                         Console.WriteLine(arrayToGuess);
+                        // keypress 
                         char userLetter = Console.ReadKey().KeyChar;
+                        // if secret word contains key pressed than replace char in word to assemble
                         if (wordToGuess.Contains(userLetter))
+                        {
                             for (int i = 0; i < wordToGuess.Length; i++)
                             {
+                                if (wordToGuess[i] == userLetter)
+                                {
                                     arrayToGuess[i] = userLetter;
+                                }
                             }
+                        }
                         Console.Clear();
+                        //Check if array still has placeholders
                         if (arrayToGuess.Contains('-') == false)
-                        //if (wordToGuess.Equals(new string(arrayToGuess)))
                         {
                             Console.WriteLine("Win");
                             break;
                         }
+                        //deduct attempts with wrong character guess
                         if (wordToGuess.Contains(userLetter) == false)
                         {
                             triesLeft--;
                         }
-                        Console.WriteLine($"You have {triesLeft - 1} attempts left");
+                        Console.WriteLine($"You have {triesLeft} attempts left");
                     }
-                    Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
+                    //if array still contains placeholders and amount of tries run out , write text
+                    if (arrayToGuess.Contains('-') == true || triesLeft == 0)
+                    {
+                        Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
+                    }
+                    // play again loop
                     Console.WriteLine("If you want to play again press Y for yes, or N for No ");
                     if (Console.ReadLine().ToLower().Equals("y"))
                     {
+                        Console.Clear();
                         continue;
                     }
                     else
