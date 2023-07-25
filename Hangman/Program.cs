@@ -14,9 +14,9 @@ namespace Hangman
         const char PLACEHOLDER = '-';
         static void Main(string[] args)
         {
-
             while (true)
             {
+                List<char> pressedKeys = new List<char>();                          //new list initiated with every game, list of pressed keys
                 int wordRandomFromList = RNG.Next(LISTOFWORDS.Count);                    // choose random number
                 string wordToGuess = LISTOFWORDS[wordRandomFromList];                    //assign random letter to word and store in a string
 
@@ -26,13 +26,28 @@ namespace Hangman
                     arrayToGuess[c] = PLACEHOLDER;
                 }
 
-                int triesLeft = TRIES;
+                //place random character in word for easier guess
+                int easyGuess = RNG.Next(wordToGuess.Length);
+                arrayToGuess[easyGuess] = wordToGuess[easyGuess];
 
-                while (triesLeft > 0)                    //game loop
+                int triesLeft = TRIES;                // every game takes value from constant
+
+                Console.WriteLine("Random position letter has been revealed, however that letter might still be in the word");
+
+                while (triesLeft > 0 && arrayToGuess.Contains(PLACEHOLDER))              //game loop
                 {
                     Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");                        // little discription of game
+                    Console.Write("You have pressed : ");                               //shows pressed characters in a list 
+                    foreach (char c in pressedKeys)
+                    {
+                        Console.Write(c);
+                    }
+                    Console.WriteLine();
                     Console.WriteLine(arrayToGuess);
-                    char userLetter = Console.ReadKey().KeyChar;                     // keypress 
+
+
+                    char userLetter = Console.ReadKey().KeyChar;           // keypress 
+                    pressedKeys.Add(userLetter);                            //adds pressed character to list
 
                     if (wordToGuess.Contains(userLetter))               // if secret word contains key pressed than replace char in word to assemble
                     {
@@ -44,27 +59,27 @@ namespace Hangman
                             }
                         }
                     }
-
-                    Console.Clear();
-
-                    if (arrayToGuess.Contains(PLACEHOLDER) == false)                        //Check if array still has placeholders
-                    {
-                        Console.WriteLine("You have sucessfully guessed word!");
-                        break;
-                    }
-                    else                        //deduct attempts with wrong character guess
+                    else
                     {
                         triesLeft--;
                     }
-                }
-                if (triesLeft == 0)              //if array still contains placeholders and amount of tries run out , write text
+                    Console.Clear();
+
+                }    //end of 2nd while loop
+
+                if (arrayToGuess.Contains(PLACEHOLDER))              //if array still contains placeholders , write text
                 {
-                    Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
+                    Console.WriteLine("You have run out of tries ! Better luck next time");
+                    Console.WriteLine($"Word you were trying to guess was :  {wordToGuess}");
+                }
+                else
+                {
+                    Console.WriteLine("You have sucessfully guessed word!");
                 }
 
                 // play again loop
                 Console.WriteLine("If you want to play again press Y for yes, or N for No ");
-                if (Console.ReadLine().ToLower().Equals("y"))
+                if (Console.ReadKey(true).Key.ToString().ToLower() == "y")
                 {
                     Console.Clear();
                     continue;
