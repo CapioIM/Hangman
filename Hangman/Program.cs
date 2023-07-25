@@ -17,8 +17,9 @@ namespace Hangman
             while (true)
             {
                 List<char> pressedKeys = new List<char>();                          //new list initiated with every game, list of pressed keys
+               
                 int wordRandomFromList = RNG.Next(LISTOFWORDS.Count);                    // choose random number
-                string wordToGuess = LISTOFWORDS[wordRandomFromList];                    //assign random letter to word and store in a string
+                string wordToGuess = LISTOFWORDS[wordRandomFromList];                    //assign random number to word and store in a string
 
                 char[] arrayToGuess = new char[wordToGuess.Length];                    //create array with info which will be shown to player
                 for (int c = 0; c < arrayToGuess.Length; c++)                    //assign amount of dashes with amount of characters in secret word
@@ -30,24 +31,24 @@ namespace Hangman
                 int easyGuess = RNG.Next(wordToGuess.Length);
                 arrayToGuess[easyGuess] = wordToGuess[easyGuess];
 
-                int triesLeft = TRIES;                // every game takes value from constant
+                int triesLeft = TRIES;                // on every start of game takes value from constant
 
                 Console.WriteLine("Random position letter has been revealed, however that letter might still be in the word");
 
-                while (triesLeft > 0 && arrayToGuess.Contains(PLACEHOLDER))              //game loop
+                while (triesLeft > 0 && arrayToGuess.Contains(PLACEHOLDER))              //game loop, as long as there are tries AND letters to be guessed
                 {
-                    Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");                        // little discription of game
+                    Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");           // little discription of game
                     Console.Write("You have pressed : ");                               //shows pressed characters in a list 
                     foreach (char c in pressedKeys)
                     {
                         Console.Write(c);
                     }
                     Console.WriteLine();
+
                     Console.WriteLine(arrayToGuess);
 
-
                     char userLetter = Console.ReadKey().KeyChar;           // keypress 
-                    pressedKeys.Add(userLetter);                            //adds pressed character to list
+                    pressedKeys.Add(userLetter);                            //adds pressed character to list of pressed characters
 
                     if (wordToGuess.Contains(userLetter))               // if secret word contains key pressed than replace char in word to assemble
                     {
@@ -64,8 +65,7 @@ namespace Hangman
                         triesLeft--;
                     }
                     Console.Clear();
-
-                }    //end of 2nd while loop
+                }    //end of game loop
 
                 if (arrayToGuess.Contains(PLACEHOLDER))              //if array still contains placeholders , write text
                 {
@@ -74,15 +74,14 @@ namespace Hangman
                 }
                 else
                 {
-                    Console.WriteLine("You have sucessfully guessed word!");
+                    Console.WriteLine($"You have sucessfully guessed word: {wordToGuess} !");
                 }
 
                 // play again loop
-                Console.WriteLine("If you want to play again press Y for yes, or N for No ");
+                Console.WriteLine("If you want to play again press Y for yes, or any key for No ");
                 if (Console.ReadKey(true).Key.ToString().ToLower() == "y")
                 {
                     Console.Clear();
-                    continue;
                 }
                 else
                 {
