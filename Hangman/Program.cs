@@ -33,7 +33,8 @@ namespace Hangman
                     //game loop
                     while (triesLeft > 0)
                     {
-                        Console.WriteLine($"Guess word below within {triesLeft} attempts");
+                        // little discription of game
+                        Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");
                         Console.WriteLine(arrayToGuess);
                         // keypress 
                         char userLetter = Console.ReadKey().KeyChar;
@@ -60,7 +61,6 @@ namespace Hangman
                         {
                             triesLeft--;
                         }
-                        Console.WriteLine($"You have {triesLeft} attempts left");
                     }
                     //if array still contains placeholders and amount of tries run out , write text
                     if (arrayToGuess.Contains(PLACEHOLDER) == true || triesLeft == 0)
