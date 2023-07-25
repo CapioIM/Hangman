@@ -57,7 +57,7 @@ namespace Hangman
                         triesLeft--;
                     }
                 }
-                if (arrayToGuess.Contains(PLACEHOLDER) == true && triesLeft == 0)              //if array still contains placeholders and amount of tries run out , write text
+                if (triesLeft == 0)              //if array still contains placeholders and amount of tries run out , write text
                 {
                     Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
                 }
