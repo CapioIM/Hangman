@@ -10,7 +10,6 @@ namespace Hangman
                                                     "fishhook","myth","quips","jovial","zigzag",
                                                     };
         public static Random RNG = new Random();                                                                                   // random number function
-        const int RNGMIN = 0;
         const int TRIES = 10;
         const char PLACEHOLDER = '-';
         static void Main(string[] args)
@@ -18,28 +17,24 @@ namespace Hangman
             {
                 while (true)
                 {
-                    // choose random number
-                    int wordRandomFromList = RNG.Next(RNGMIN, LISTOFWORDS.Count);
-                    //assign random letter to word and store in a string
-                    string wordToGuess = LISTOFWORDS[wordRandomFromList];
-                    //create array with info which will be shown to player
-                    char[] arrayToGuess = new char[wordToGuess.Length];
-                    //assign amount of dashes with amount of characters in secret word
-                    for (int c = 0; c < arrayToGuess.Length; c++)
+                    int wordRandomFromList = RNG.Next(LISTOFWORDS.Count);                    // choose random number
+                    string wordToGuess = LISTOFWORDS[wordRandomFromList];                    //assign random letter to word and store in a string
+
+                    char[] arrayToGuess = new char[wordToGuess.Length];                    //create array with info which will be shown to player
+                    for (int c = 0; c < arrayToGuess.Length; c++)                    //assign amount of dashes with amount of characters in secret word
                     {
                         arrayToGuess[c] = PLACEHOLDER;
                     }
+
                     int triesLeft = TRIES;
-                    //game loop
-                    while (triesLeft > 0)
+
+                    while (triesLeft > 0)                    //game loop
                     {
-                        // little discription of game
-                        Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");
+                        Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");                        // little discription of game
                         Console.WriteLine(arrayToGuess);
-                        // keypress 
-                        char userLetter = Console.ReadKey().KeyChar;
-                        // if secret word contains key pressed than replace char in word to assemble
-                        if (wordToGuess.Contains(userLetter))
+                        char userLetter = Console.ReadKey().KeyChar;                     // keypress 
+                        
+                        if (wordToGuess.Contains(userLetter))               // if secret word contains key pressed than replace char in word to assemble
                         {
                             for (int i = 0; i < wordToGuess.Length; i++)
                             {
@@ -49,24 +44,24 @@ namespace Hangman
                                 }
                             }
                         }
+
                         Console.Clear();
-                        //Check if array still has placeholders
-                        if (arrayToGuess.Contains(PLACEHOLDER) == false)
+
+                        if (arrayToGuess.Contains(PLACEHOLDER) == false)                        //Check if array still has placeholders
                         {
                             Console.WriteLine("Win");
                             break;
                         }
-                        //deduct attempts with wrong character guess
-                        if (wordToGuess.Contains(userLetter) == false)
+                        else                        //deduct attempts with wrong character guess
                         {
                             triesLeft--;
                         }
                     }
-                    //if array still contains placeholders and amount of tries run out , write text
-                    if (arrayToGuess.Contains(PLACEHOLDER) == true || triesLeft == 0)
+                    if (arrayToGuess.Contains(PLACEHOLDER) == true || triesLeft == 0)                    //if array still contains placeholders and amount of tries run out , write text
                     {
                         Console.WriteLine($"Word you were trying to guess was {wordToGuess}");
                     }
+
                     // play again loop
                     Console.WriteLine("If you want to play again press Y for yes, or N for No ");
                     if (Console.ReadLine().ToLower().Equals("y"))
