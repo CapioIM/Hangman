@@ -49,7 +49,7 @@ namespace Hangman
 
                     if (arrayToGuess.Contains(PLACEHOLDER) == false)                        //Check if array still has placeholders
                     {
-                        Console.WriteLine("Win");
+                        Console.WriteLine("You have sucessfully guessed word!");
                         break;
                     }
                     else                        //deduct attempts with wrong character guess
