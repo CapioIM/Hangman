@@ -21,21 +21,20 @@ namespace Hangman
                 int wordRandomFromList = RNG.Next(LISTOFWORDS.Count);                    // choose random number
                 string wordToGuess = LISTOFWORDS[wordRandomFromList];                    //assign random number to word and store in a string
 
-                char[] arrayToGuess = new char[wordToGuess.Length];                    //create array with info which will be shown to player
-                for (int c = 0; c < arrayToGuess.Length; c++)                    //assign amount of dashes with amount of characters in secret word
+                char[] arrayLettersGuessed = new char[wordToGuess.Length];                    //create array with info which will be shown to player
+                for (int c = 0; c < arrayLettersGuessed.Length; c++)                    //assign amount of dashes with amount of characters in secret word
                 {
-                    arrayToGuess[c] = PLACEHOLDER;
+                    arrayLettersGuessed[c] = PLACEHOLDER;
                 }
 
-                //place random character in word for easier guess
-                int easyGuess = RNG.Next(wordToGuess.Length);
-                arrayToGuess[easyGuess] = wordToGuess[easyGuess];
+                //place random character in word for easier guess, would be probabaly more usefull for longer words
+                Console.WriteLine(" 1 Random position letter has been revealed, however that letter might still be in the word");
+                int revealIndex = RNG.Next(wordToGuess.Length);
+                arrayLettersGuessed[revealIndex] = wordToGuess[revealIndex];
 
                 int triesLeft = TRIES;                // on every start of game takes value from constant
 
-                Console.WriteLine("Random position letter has been revealed, however that letter might still be in the word");
-
-                while (triesLeft > 0 && arrayToGuess.Contains(PLACEHOLDER))              //game loop, as long as there are tries AND letters to be guessed
+                while (triesLeft > 0 && arrayLettersGuessed.Contains(PLACEHOLDER))              //game loop, as long as there are tries AND letters to be guessed
                 {
                     Console.WriteLine($"Guess random word letter by letter within {triesLeft} attempts!");           // little discription of game
                     Console.Write("You have pressed : ");                               //shows pressed characters in a list 
@@ -45,7 +44,7 @@ namespace Hangman
                     }
                     Console.WriteLine();
 
-                    Console.WriteLine(arrayToGuess);
+                    Console.WriteLine(arrayLettersGuessed);
 
                     char userLetter = Console.ReadKey().KeyChar;           // keypress 
                     pressedKeys.Add(userLetter);                            //adds pressed character to list of pressed characters
@@ -56,7 +55,7 @@ namespace Hangman
                         {
                             if (wordToGuess[i] == userLetter)
                             {
-                                arrayToGuess[i] = userLetter;
+                                arrayLettersGuessed[i] = userLetter;
                             }
                         }
                     }
@@ -67,7 +66,7 @@ namespace Hangman
                     Console.Clear();
                 }    //end of game loop
 
-                if (arrayToGuess.Contains(PLACEHOLDER))              //if array still contains placeholders , write text
+                if (arrayLettersGuessed.Contains(PLACEHOLDER))              //if array still contains placeholders , write text
                 {
                     Console.WriteLine("You have run out of tries ! Better luck next time");
                     Console.WriteLine($"Word you were trying to guess was :  {wordToGuess}");
@@ -88,7 +87,6 @@ namespace Hangman
                     break;
                 }
             }
-
         }
     }
 }
